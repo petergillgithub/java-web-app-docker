@@ -7,10 +7,10 @@ replicaCount: 1
 containerPort: 8080
 
 image:
-  repository: dockerhandson/java-web-app
+  repository: petergillhmg/java-web-app-docker
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,8 +39,8 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
-  port: 80
+  type: LoadBalancer
+  port: 8080
 
 ingress:
   enabled: false
