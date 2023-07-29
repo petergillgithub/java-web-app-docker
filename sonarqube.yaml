@@ -21,7 +21,7 @@ spec:
             memory: "128Mi"
             cpu: "256m"
           limits:
-            memory: "128Mi"
+            memory: "256Mi"
             cpu: "500m"
         ports:
         - containerPort: 9000
@@ -34,7 +34,7 @@ metadata:
   name: sonarqubesvc
   namespace: helm-deployment
 spec: 
-  type: LoadBalancer
+  type: NodePort
   selector: 
     app: sonarqube
   ports: 
