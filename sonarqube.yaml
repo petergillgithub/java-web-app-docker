@@ -34,7 +34,7 @@ metadata:
   name: sonarqubesvc
   namespace: helm-deployment
 spec: 
-  type: NodePort
+  type: LoadBalancer
   selector: 
     app: sonarqube
   ports: 
