@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarqube
+  namespace: helm-deployment
+spec:
+  selector:
+    matchLabels:
+      app: sonarqube
+  template:
+    metadata:
+      labels:
+        app: sonarqube 
+    spec:
+      containers:
+      - name: sonarqube 
+        image: petergillhmg/sonarqube:1
+        resources:
+          requests: 
+            memory: "128Mi"
+            cpu: "256m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 9000
