@@ -1,0 +1,56 @@
+pipeline{
+    
+agent any 
+
+tools {
+  maven 'Maven3.9.4'
+}
+
+
+stages{
+    
+    stage('CheckOut'){
+    steps{
+        git 'https://github.com/petergill-github-org/java-web-app-docker.git'
+            
+        }
+    }
+        
+    stage('Build'){
+    steps{
+    sh "mvn clean package"
+            
+        }
+    }    
+    
+    stage('DockerImageCreate'){
+    steps{
+    sh "docker build -t petergillhmg/java-web-app-docker:${BUILD_NUMBER} ."    
+    }
+    }
+    
+    stage('PushtoDockerRegistry'){
+    steps{
+    withCredentials([string(credentialsId: '7122a304-6205-4212-a93a-ba346929be08', variable: 'DOCKER_HUB')]) {
+    sh "docker login -u petergillhmg -p ${DOCKER_HUB}"
+    sh "docker push petergillhmg/java-web-app-docker:${BUILD_NUMBER}"
+}    
+        
+    }
+    }
+        
+    stage('DeploytoK8sCluster'){
+    steps{
+    sshagent(['78fe0bb5-122f-4aba-9eea-882ca77c1d20']) {
+    sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.38.145"
+    sh "ssh ubuntu@172.31.38.145 helm upgrade --install javaweb javawebapp -n test-ns"   
+}
+        
+    }
+    }
+        
+    
+        
+    }
+    
+}
