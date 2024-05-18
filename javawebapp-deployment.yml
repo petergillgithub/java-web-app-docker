@@ -13,7 +13,7 @@ spec:
         name: javawebapp
     spec:
       containers:
-      - image: petergillhmg/java-web-app-docker:10
+      - image: 339712876743.dkr.ecr.eu-west-2.amazonaws.com/devopsrepo:latest
         name: javawebapp
         ports:
         - name: javawebapp
